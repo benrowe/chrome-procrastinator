@@ -1,0 +1,19 @@
+{
+  "name": "procrastinator",
+  "version": "1.0.0",
+  "description": "procrastinator for chrome",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benrowe/chrome-procrastinator.git"
+  },
+  "author": "Ben Rowe",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/benrowe/chrome-procrastinator/issues"
+  },
+  "homepage": "https://github.com/benrowe/chrome-procrastinator#readme"
+}
