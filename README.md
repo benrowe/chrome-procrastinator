@@ -1,4 +1,3 @@
 # procrastinator
-==============
 
 procrastinator for chrome
