@@ -7,7 +7,7 @@ h1 {
 	font-weight: bold;
 	margin-top: -6px;
 	margin-left: 5px;
-	
+
 }
 .actions {
 	position: absolute;
@@ -37,6 +37,10 @@ h1 {
 
 #saved.disabled {
 	opacity: .4;
+}
+
+#pause {
+	background: url(../images/glyphicons-halflings.png)  no-repeat -287px -72px;
 }
 
 .cr {
