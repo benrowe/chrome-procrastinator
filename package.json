@@ -1,11 +1,8 @@
 {
   "name": "procrastinator",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "procrastinator for chrome",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/benrowe/chrome-procrastinator.git"
@@ -15,5 +12,31 @@
   "bugs": {
     "url": "https://github.com/benrowe/chrome-procrastinator/issues"
   },
-  "homepage": "https://github.com/benrowe/chrome-procrastinator#readme"
+  "homepage": "https://github.com/benrowe/chrome-procrastinator#readme",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --display-error-details",
+    "deploy": "build/deploy.sh"
+  },
+  "dependencies": {
+    "jquery": "^1.9.1"
+  },
+  "devDependencies": {
+    "@types/bootstrap": "^3.3.36",
+    "@types/chrome": "^0.0.58",
+    "@types/jquery": "^1.9.1",
+    "clean-webpack-plugin": "^0.1.17",
+    "copy-webpack-plugin": "^4.3.1",
+    "css-loader": "^0.28.8",
+    "file-loader": "^1.1.6",
+    "fs-extra": "^5.0.0",
+    "html-loader": "^0.5.4",
+    "html-webpack-plugin": "^2.30.1",
+    "script-loader": "^0.7.2",
+    "style-loader": "^0.19.1",
+    "ts-loader": "^3.2.0",
+    "typescript": "^2.6.2",
+    "webpack": "^3.10.0",
+    "write-file-webpack-plugin": "^4.2.0"
+  }
 }

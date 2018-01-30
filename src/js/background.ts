@@ -1,37 +1,42 @@
-if (procrastinator.storageType() === 'localStorage') {
-	procrastinator.upgradeStorage(function () {
+import ExtensionIcon from './extension-icon';
+import Procrastinator from './procrastinator';
+import { detectRefresh, refreshPC } from './global';
+
+let icon = new ExtensionIcon;
+let procrastinator = Procrastinator.get();
+procrastinator.on(Procrastinator.Events.init, () => {
+	// update the button state if procrastinator is disabled
+	if (procrastinator.isEnabled() === false) {
+		icon.disable();
+	}
+});
+
+if (procrastinator.storageType() === Procrastinator.StorageType.local) {
+	procrastinator.upgradeStorage(() => {
 		console.info('storage upgraded');
 	});
 }
 
-procrastinator.on('init', function() {
-	// update the button state if procrastinator is disabled
-	if (procrastinator.isEnabled() === false) {
-		extensionIcon.disable();
-	}
-});
-
-
-var pauseTimeout = false;
+let pauseTimeout: number;
 
 detectRefresh('bg', function(request) {
 	console.info('reloaded the settings, and re-applying them');
 	// change the button state, if required
 	if (procrastinator.isEnabled() === false) {
-		extensionIcon.disable();
+		icon.disable()
 		clearTimeout(pauseTimeout);
-		pauseTimeout = false;
+		pauseTimeout = 0;
 	} else {
-		extensionIcon.enable();
+		icon.enable();
 	}
-	if (procrastinator.paused() && pauseTimeout === false) {
+	if (procrastinator.paused() && pauseTimeout == 0) {
 		console.info('detected pause. starting timer for ' + procrastinator.pauseFor());
 		pauseTimeout = setTimeout(function() {
 			console.info('upausing');
 			procrastinator.removePause();
 			
-			pauseTimeout = false;
-			extensionIcon.enable();
+			pauseTimeout = 0;
+			icon.enable();
 			refreshPC('bg');
 		}, procrastinator.pauseFor() * 1000);
 	}
@@ -50,8 +55,8 @@ chrome.webRequest.onBeforeRequest.addListener(function(details) {
 	}
 	// block url
 	var url = chrome.extension.getURL('block.html')
-	if (procrastinator.getBlockUrl() != '') {
-		url = procrastinator.getBlockUrl();
+	if (procrastinator.blockUrl != '') {
+		url = procrastinator.blockUrl;
 	}
 	return {redirectUrl: url+'?r='+encodeURI(details.url)};
 }, {urls: ["<all_urls>"]}, ["blocking"]);
