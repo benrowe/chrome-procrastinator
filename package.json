@@ -19,7 +19,8 @@
     "deploy": "build/deploy.sh"
   },
   "dependencies": {
-    "jquery": "^1.9.1"
+    "jquery": "^1.9.1",
+    "vue": "^2.5.13"
   },
   "devDependencies": {
     "@types/bootstrap": "^3.3.36",
