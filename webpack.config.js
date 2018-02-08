@@ -8,7 +8,8 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const WriteFilePlugin = require("write-file-webpack-plugin");
 
 let alias = {
-  jquery: 'jquery/jquery'
+  jquery: 'jquery/jquery',
+  'vue$': 'vue/dist/vue.esm.js'
 };
 
 const secretsPath = path.join(__dirname, ('secrets.' + env.NODE_ENV + '.js'));
@@ -34,9 +35,26 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.ts$/,
+        test: /\.vue$/,
+        loader: 'vue-loader',
+        options: {
+          loaders: {
+            // Since sass-loader (weirdly) has SCSS as its default parse mode, we map
+            // the "scss" and "sass" values for the lang attribute to the right configs here.
+            // other preprocessors should work out of the box, no loader config like this necessary.
+            'scss': 'vue-style-loader!css-loader!sass-loader',
+            'sass': 'vue-style-loader!css-loader!sass-loader?indentedSyntax',
+          }
+          // other vue-loader options go here
+        }
+      },
+      {
+        test: /\.tsx?$/,
         loader: 'ts-loader',
-        exclude: /node_modules/
+        exclude: /node_modules/,
+        options: {
+          appendTsSuffixTo: [/\.vue$/],
+        }
       },
       {
         test: /\.css$/,
@@ -57,7 +75,7 @@ module.exports = {
   },
   resolve: {
       alias: alias,
-      extensions: ['.ts', '.tsx', '.json', '.js']
+      extensions: ['.ts', '.tsx', '.json', '.js', '.vue']
   },
   plugins: [
     new webpack.ProvidePlugin({
