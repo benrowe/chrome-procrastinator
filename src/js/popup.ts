@@ -6,6 +6,38 @@ import timecodeControl from './timecode-control';
 import Timecode from './timecode';
 import Website from './website';
 
+import Vue from 'vue';
+import Version from './components/Version.vue';
+import ActionBar from './components/ActionBar.vue';
+
+let v = new Vue({
+    el: "#app",
+    template: `
+	<div>
+		<h1>Procrastinator</h1>
+		<action-bar :actions="actions" />
+        <version :version="version" />
+        </div>
+    `,
+    data() {
+		return {
+			version: '',
+			actions: [
+				{
+					title: 'hi'
+				}
+			]
+		}
+	},
+    components: {
+		Version,
+		ActionBar
+	},
+	mounted() {
+		this.version = '?';//chrome.app.getDetails().version; 
+	}
+});
+
 let $ = window.jQuery;
 
 let pc = procrastinator.get();
