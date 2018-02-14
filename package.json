@@ -20,7 +20,6 @@
     "deploy": "build/deploy.sh"
   },
   "dependencies": {
-    "jquery": "^1.9.1",
     "vue": "^2.5.13",
     "vue-class-component": "^6.1.2",
     "vue-property-decorator": "^6.0.0"
