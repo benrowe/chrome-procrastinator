@@ -132,5 +132,12 @@ module.exports = {
       chunks: ["common", "background"]
     }),
     new WriteFilePlugin()
-  ]
+  ],
+  devServer: {
+    historyApiFallback: true,
+    noInfo: true,
+    contentBase: path.join(__dirname, 'dist'),
+    compress: true,
+    port: 9000
+  }
 }
