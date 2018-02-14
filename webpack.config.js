@@ -8,7 +8,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const WriteFilePlugin = require("write-file-webpack-plugin");
 
 let alias = {
-  jquery: 'jquery/jquery',
   'vue$': 'vue/dist/vue.esm.js'
 };
 
@@ -26,7 +25,6 @@ module.exports = {
     options: path.join(__dirname, "src", "js", "options.ts"),
     background: path.join(__dirname, "src", "js", "background.ts"),
     block: path.join(__dirname, "src", "js", "block.ts"),
-    vendor: ['jquery']
   },
   output: {
     filename: 'js/[name].bundle.js',
@@ -78,10 +76,6 @@ module.exports = {
       extensions: ['.ts', '.tsx', '.json', '.js', '.vue']
   },
   plugins: [
-    new webpack.ProvidePlugin({
-      $: "jquery",
-      jQuery: "jquery"
-    }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'common',
       filename: 'js/common.js',
