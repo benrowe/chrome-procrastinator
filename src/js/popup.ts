@@ -62,8 +62,6 @@ let v = new Vue({
 	}
 });
 
-let $ = window.jQuery;
-
 let pc = procrastinator.get();
 pc.on(procrastinator.Events.init, function():void {
 	if (pc.timecodeControl === timecodeControl.Types.site) {

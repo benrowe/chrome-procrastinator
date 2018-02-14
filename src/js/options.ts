@@ -1,11 +1,9 @@
-// import * as jQuery from 'jquery';
+
 import pc from "./procrastinator";
 import Timecode from './timecode';
 import { detectRefresh, refreshPC } from "./global";
 import Website from "./website";
 import timecodeControl from "./timecode-control";
-
-let $ = window.jQuery;
 
 const timeTemplate = '<tr><td><input type="text" value="{website}" autofocus /></td><td><input type="text" value="{timecode}" placeholder="0900-1200, 1330-1525" /><i class="icon-trash remove"></i></td></tr>';
 const emptyTemplate = '<tr class="empty-row"><td colspan="2">You have no urls/patterns. Try adding a <a href="#" class="new-row">new one</a></td></tr>';
