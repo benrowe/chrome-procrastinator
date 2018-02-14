@@ -9,13 +9,20 @@ import Website from './website';
 import Vue from 'vue';
 import Version from './components/Version.vue';
 import ActionBar from './components/ActionBar.vue';
+import Action from './components/Action.vue';
+import Icon from './components/Icon.vue';
 
 let v = new Vue({
     el: "#app",
     template: `
 	<div>
-		<h1>Procrastinator</h1>
-		<action-bar :actions="actions" />
+		<h1>Procrastinator!!!</h1>
+		<action-bar>
+			<action v-on:click.native="openOptions"><icon type="spanner" />Options</action>
+			<action v-if="enabled" v-on:click.native="toggleEnable"><icon type="power" />Disable</action>
+			<action v-else v-on:click.native="toggleEnable"><icon type="power" />Enable</action>
+			<action><icon type="pause" />Pause</action>
+		</action-bar>
         <version :version="version" />
         </div>
     `,
@@ -24,14 +31,31 @@ let v = new Vue({
 			version: '',
 			actions: [
 				{
-					title: 'hi'
+					label: 'Options',
+					icon: 'spanner'
+				},
+				{
+					label: 'Disable',
+					icon: 'power'
+				},
+				{
+					label: 'Pause',
+					icon: 'pause'
 				}
 			]
 		}
 	},
     components: {
 		Version,
-		ActionBar
+		ActionBar,
+		Action,
+		Icon
+	},
+	methods: {
+		openOptions() {
+			alert('open');
+			openUrl(chrome.extension.getURL('options.html'), true);
+		}
 	},
 	mounted() {
 		this.version = '?';//chrome.app.getDetails().version; 

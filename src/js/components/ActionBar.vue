@@ -1,6 +1,6 @@
 <template>
   <div class="root">
-    <a v-for="action in actions" href=""><Icon />{{action.title}}</a>
+    <slot></slot>
   </div>
 </template>
 
@@ -14,16 +14,10 @@ export default Vue.extend({
   ],
   components: {
     Icon
-  },
-  mounted() {
-      console.log(this.actions);
   }
 });
 </script>
 
 <style lang="scss" scoped>
-.root {
-    background: red;
-}
 </style>
 

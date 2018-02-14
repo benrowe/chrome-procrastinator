@@ -1,5 +1,5 @@
 <template>
-  <i>icon</i>
+  <i>icon-{{ type }}</i>
 </template>
 
 <script lang="ts">
