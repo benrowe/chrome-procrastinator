@@ -28,10 +28,6 @@
   version "3.2.18"
   resolved "https://registry.yarnpkg.com/@types/jquery/-/jquery-3.2.18.tgz#a1cd262034cd8c79fa4d9b2a409d8f747ac2f72f"
 
-"@types/jquery@^1.9.1":
-  version "1.10.33"
-  resolved "https://registry.yarnpkg.com/@types/jquery/-/jquery-1.10.33.tgz#6c4c279f8d06839b184950432e880e0a469a64a1"
-
 abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
