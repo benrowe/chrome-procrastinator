@@ -6,7 +6,7 @@ import timecodeControl from './timecode-control';
 import Timecode from './timecode';
 import Website from './website';
 
-import Vue from 'vue';
+import Vue from 'vue';	
 import Version from './components/Version.vue';
 import ActionBar from './components/ActionBar.vue';
 import Action from './components/Action.vue';
@@ -15,34 +15,32 @@ import Icon from './components/Icon.vue';
 let v = new Vue({
     el: "#app",
     template: `
-	<div>
-		<h1>Procrastinator!!!</h1>
-		<action-bar>
-			<action v-on:click.native="openOptions"><icon type="spanner" />Options</action>
-			<action v-if="enabled" v-on:click.native="toggleEnable"><icon type="power" />Disable</action>
-			<action v-else v-on:click.native="toggleEnable"><icon type="power" />Enable</action>
-			<action><icon type="pause" />Pause</action>
-		</action-bar>
-        <version :version="version" />
-        </div>
+		<div>
+			<h1>Procrastinator!!!</h1>
+			<action-bar>
+				<action @click.native="openOptions" tooltip="Open the options window"><icon type="spanner" />Options</action>
+				<action v-if="enabled" @click.native="toggleEnable" tooltip="Disable procrastinator"><icon type="power" />Disable</action>
+				<action v-else @click.native="toggleEnable" tooltip="Enable procrastinator"><icon type="power" />Enable</action>
+				<action @click.native="pause" tooltip="Pause for 5 minutes"><icon type="pause" />Pause</action>
+			</action-bar>
+			<fieldset class="well well-small">
+				<legend>Quick Add</legend>
+				<div class="control-group">
+					<div class="controls"><input v-model="pattern" /></div>
+				</div>
+				<div class="row-item timecode">
+					<label for="" class="row-label">Timecode</label>
+					<div class="input-area"><input v-model="timecode" placeholder="0900-1200,1300-1730" /></div>
+				</div>
+				<button id="quickadd" class="btn btn-primary btn-block">Quick Add</button>
+			</fieldset>
+			<version @click.native="openOptions('roadmapModal')" :version="version" />
+		</div>
     `,
     data() {
 		return {
 			version: '',
-			actions: [
-				{
-					label: 'Options',
-					icon: 'spanner'
-				},
-				{
-					label: 'Disable',
-					icon: 'power'
-				},
-				{
-					label: 'Pause',
-					icon: 'pause'
-				}
-			]
+			enabled: true
 		}
 	},
     components: {
