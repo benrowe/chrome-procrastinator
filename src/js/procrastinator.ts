@@ -41,7 +41,7 @@ module Procrastinator {
 		constructor() 
 		{
 			this.loadState(() => {
-				console.info('Procrastorator has booted with state');
+				console.info('Procrastinator has booted with state');
 				this.trigger('init');
 			})
 		}
