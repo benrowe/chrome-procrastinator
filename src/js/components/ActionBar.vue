@@ -9,6 +9,7 @@ import Vue from "vue";
 import Icon from "./Icon.vue";
 
 export default Vue.extend({
+  name: 'action-bar',
   props: [
     'actions'
   ],
