@@ -276,36 +276,35 @@ module Procrastinator {
 		private loadState(callback: () => void)
 		{
 			console.log('loading procrastinator state');
-			chrome.storage.sync.get(null, function(items: any) {
+			let self = this;
+			chrome.storage.sync.get(null, (items: any) => {
 				console.info('retrieved storage');
 				if (items.enabled !== null) {
-					this._enabled = items.enabled == 1;
+					self._enabled = items.enabled == 1;
 				}
 		
 				if (items.timecodeControl !== null) {
-					this._timecodeControl = items.timecodeControl;
+					self.tcControl = items.timecodeControl;
 				}
 				if (items.timecodeGlobal !== undefined) {
-					this._timecodeGlobal = new Timecode(items.timecodeGlobal.toString());
+					self.tcGlobal = new Timecode(items.timecodeGlobal.toString());
 				} 
 		
 				if (items.blockUrl !== undefined) {
-					this._blockUrl = items.blockUrl;
+					self._blockUrl = items.blockUrl;
 				}
 		
 				if (items.pause !== undefined) {
-					this._pause = items.pause;
+					self._pause = items.pause;
 				}
-		
 				if (items.websites !== undefined && items.websites.toString().length > 2) {
-					console.log(items.websites);
-					console.log('test');
+					
 					try {
-						this._websites = JSON.parse(items.toString().websites) || [];
+						let websites = JSON.parse(items.websites) || [];
 						// correct the timecodes
 		
-						for(var i = 0, len = this._websites.length; i < len; i++) {
-							this._websites[i] = new Website(this._websites[i].pattern, this._websites[i].timecode);
+						for(var i = 0, len = websites.length; i < len; i++) {
+							self._websites.push(new Website(websites[i].pattern, new Timecode(websites[i].timecode)));
 						}
 		
 					} catch(e) {
@@ -327,21 +326,22 @@ module Procrastinator {
 		{
 			// debounce the save
 			clearTimeout(this.saveTimeout);
+			let self = this;
 			this.saveTimeout = setTimeout(function() {
 				console.log('saving state');
 				let items: any = {};
-				
-				items['enabled'] = this._enabled ? 1 : 0;
-				items['timecodeControl'] = this.tcControl.toString();
-				items['timecodeGlobal'] = this._timecodeGlobal.get();
-				items['blockUrl'] = this._blockUrl;
-				items['pause'] = this._pause;
+				items['enabled'] = self._enabled ? 1 : 0;
+				items['timecodeControl'] = self.timecodeControl.toString();
+				items['timecodeGlobal'] = self.timecodeGlobal.timecode;
+				items['blockUrl'] = self._blockUrl;
+				items['pause'] = self._pause;
 
 				var ws = [];
 				// convert timecodes back to strings
-				for(var i = 0, len = this._websites.length; i < len; i++) {
-					ws.push(this._websites[i].toObject());
+				for(var i = 0, len = self._websites.length; i < len; i++) {
+					ws.push(self._websites[i].toObject());
 				}
+				console.log(ws);
 				items['websites'] = JSON.stringify(ws);
 				chrome.storage.sync.set(items, function() {
 				
