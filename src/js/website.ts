@@ -8,7 +8,7 @@ export default class Website
 
     public match(url: string): boolean
     {
-        var regex = this.convertPatternToRegex(this.pattern);
+        let regex = this.convertPatternToRegex(this.pattern);
         return regex && regex.exec(url) ? true : false;
     }
 
@@ -23,12 +23,12 @@ export default class Website
         }
     }
 
-    private convertPatternToRegex(pattern: string): RegExp
+  private convertPatternToRegex(pattern: string): RegExp
 	{
 		// don't convert regex's
-		if (pattern.indexOf('/') != 0) {
-			pattern = pattern.replace(/\*/, '(.*)');
-			pattern = pattern.replace(/\//, '\/');
+		if (pattern.indexOf("/") !== 0) {
+			pattern = pattern.replace(/\*/, "(.*)");
+			pattern = pattern.replace(/\//, "\/");
 		}
 		return new RegExp(pattern);
 	}
