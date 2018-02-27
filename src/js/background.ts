@@ -60,5 +60,3 @@ chrome.webRequest.onBeforeRequest.addListener(function(details) {
 	}
 	return {redirectUrl: url+'?r='+encodeURI(details.url)};
 }, {urls: ["<all_urls>"]}, ["blocking"]);
-
-// detect a version change
