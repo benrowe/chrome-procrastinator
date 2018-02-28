@@ -15,7 +15,7 @@ import TimecodeControl from './timecode-control';
 
 let pc: Procrastinator.State = Procrastinator.get();
 pc.on(Procrastinator.Events.init, () => {
-	
+	console.log(pc);
 	let app = new Vue({
 		el: "#app",
 		template: `
