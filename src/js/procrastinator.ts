@@ -8,11 +8,11 @@ module Procrastinator {
 
 	export enum StorageType {
 		local,
-		sync
+		sync,
 	}
 
 	export enum Events {
-		init = 'init'
+		init = 'init',
 	}
 
 	let pc: State;
@@ -34,11 +34,11 @@ module Procrastinator {
 		private tcControl: TimecodeControl.Types = TimecodeControl.Types.site;
 		private tcGlobal: Timecode = new Timecode('');
 		private _websites: Array<Website> = [];
-		
+
 
 		private events: { [index:string] : Array<() => void>} = {};
 
-		constructor() 
+		constructor()
 		{
 			this.loadState(() => {
 				console.info('Procrastinator has booted with state');
@@ -59,8 +59,8 @@ module Procrastinator {
 			if (!this.events[event]) {
 				return false;
 			}
-			
-			for (var i = 0; i < this.events[event].length; i++) {
+
+			for (let i = 0; i < this.events[event].length; i++) {
 				this.events[event][i]();
 			}
 		}
@@ -132,8 +132,8 @@ module Procrastinator {
 		}
 
 		/**
-		 * 
-		 * @param {Website[]} websites 
+		 *
+		 * @param {Website[]} websites
 		 */
 		set websites(websites: Array<Website>)
 		{
@@ -142,8 +142,8 @@ module Procrastinator {
 		}
 
 		/**
-		 * 
-		 * @param {Website} website 
+		 *
+		 * @param {Website} website
 		 */
 		addWebsite(website: Website): this
 		{
@@ -154,8 +154,8 @@ module Procrastinator {
 
 		/**
 		 * Pause procrastinator for x amount of seconds
-		 * 
-		 * @param {int} seconds 
+		 *
+		 * @param {int} seconds
 		 */
 		pause(seconds: number)
 		{
@@ -183,7 +183,7 @@ module Procrastinator {
 
 		/**
 		 * Get the number of seconds procastinator has been paused for
-		 * 
+		 *
 		 * @return {int}
 		 */
 		pauseFor(): number
@@ -222,14 +222,12 @@ module Procrastinator {
 		/**
 		 * Check if the provided url matches any of the registered website patterns.
 		 * If it does, return the website pattern match + it's timecode
-		 * 
+		 *
 		 * @return {Website|null}
 		 */
 		matchWebsite(url: string): Website | null
 		{
-			var domain = this.getDomainFromUrl(url);
-			var regex;
-			for (var i = 0, len = this._websites.length; i < len; i++) {
+			for (let i = 0, len = this._websites.length; i < len; i++) {
 				if (this._websites[i].match(url)) {
 					return this._websites[i];
 				}
@@ -247,7 +245,7 @@ module Procrastinator {
 
 		/**
 		 * Detect the storage engine in use
-		 * 
+		 *
 		 * @return string
 		 */
 		public storageType(): StorageType
@@ -282,39 +280,39 @@ module Procrastinator {
 				if (items.enabled !== null) {
 					self._enabled = items.enabled == 1;
 				}
-		
+
 				if (items.timecodeControl !== null) {
 					self.tcControl = items.timecodeControl;
 				}
 				if (items.timecodeGlobal !== undefined) {
 					self.tcGlobal = new Timecode(items.timecodeGlobal.toString());
-				} 
-		
+				}
+
 				if (items.blockUrl !== undefined) {
 					self._blockUrl = items.blockUrl;
 				}
-		
+
 				if (items.pause !== undefined) {
 					self._pause = items.pause;
 				}
 				if (items.websites !== undefined && items.websites.toString().length > 2) {
-					
+
 					try {
 						let websites = JSON.parse(items.websites) || [];
 						// correct the timecodes
-		
-						for(var i = 0, len = websites.length; i < len; i++) {
+
+						for(let i = 0, len = websites.length; i < len; i++) {
 							self._websites.push(new Website(websites[i].pattern, new Timecode(websites[i].timecode)));
 						}
-		
+
 					} catch(e) {
 						// invalid json
 					}
 				}
 				callback();
 			})
-			
-			
+
+
 		}
 
 		private saveTimeout: number;
@@ -336,28 +334,18 @@ module Procrastinator {
 				items['blockUrl'] = self._blockUrl;
 				items['pause'] = self._pause;
 
-				var ws = [];
+				let ws = [];
 				// convert timecodes back to strings
-				for(var i = 0, len = self._websites.length; i < len; i++) {
+				for(let i = 0, len = self._websites.length; i < len; i++) {
 					ws.push(self._websites[i].toObject());
 				}
-				console.log(ws);
+
 				items['websites'] = JSON.stringify(ws);
+				console.log(items);
 				chrome.storage.sync.set(items, function() {
-				
+
 				});
 			}, 30);
-		}
-
-		/**
-		 * extract the domain name from the provided url
-		 *
-		 * @return string
-		 */
-		private getDomainFromUrl(url: string): string
-		{
-			var parts = url.split('/');
-			return parts[2];
 		}
 	}
 }

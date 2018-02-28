@@ -3,7 +3,7 @@
  * A timecode is a string formatted like
  * 0000-0900,1200-1234
  */
-export default class Timecode 
+export default class Timecode
 {
 	private tc: string;
 

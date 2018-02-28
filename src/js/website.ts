@@ -1,8 +1,8 @@
 import Timecode from "./timecode";
 
-export default class Website
-{
-    constructor(public pattern: string, public timecode: Timecode) 
+export default class Website {
+
+    constructor(public pattern: string, public timecode: Timecode)
     {
     }
 
@@ -19,17 +19,17 @@ export default class Website
 
         return {
             pattern,
-            timecode
-        }
+            timecode,
+        };
     }
 
-  private convertPatternToRegex(pattern: string): RegExp
-	{
-		// don't convert regex's
-		if (pattern.indexOf("/") !== 0) {
-			pattern = pattern.replace(/\*/, "(.*)");
-			pattern = pattern.replace(/\//, "\/");
-		}
-		return new RegExp(pattern);
-	}
+    private convertPatternToRegex(pattern: string): RegExp
+    {
+        // don't convert regex's
+        if (pattern.indexOf("/") !== 0) {
+          pattern = pattern.replace(/\*/, "(.*)");
+          pattern = pattern.replace(/\//, "\/");
+        }
+        return new RegExp(pattern);
+    }
 }

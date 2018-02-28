@@ -6,7 +6,7 @@ import timecodeControl from './timecode-control';
 import Timecode from './timecode';
 import Website from './website';
 
-import Vue from 'vue';	
+import Vue from 'vue';
 import Version from './components/Version.vue';
 import ActionBar from './components/ActionBar.vue';
 import Action from './components/Action.vue';
@@ -48,14 +48,15 @@ pc.on(Procrastinator.Events.init, () => {
 				version: '',
 				enabled: true,
 				pattern: '',
-				timecode: ''
+				timecode: '',
+				tcEnabled: false,
 			}
 		},
 		components: {
 			Version,
 			ActionBar,
 			Action,
-			Icon
+			Icon,
 		},
 		methods: {
 			openOptions(section:string = '') {
@@ -74,7 +75,7 @@ pc.on(Procrastinator.Events.init, () => {
 				if (this.pattern == '') {
 					return;
 				}
-				var tc: Timecode = new Timecode('');
+				let tc: Timecode = new Timecode('');
 				if (this.tcEnabled) {
 					try {
 						tc = new Timecode(this.timecode);
@@ -83,23 +84,18 @@ pc.on(Procrastinator.Events.init, () => {
 					}
 				}
 
-				var ws = new Website(this.pattern, tc);
+				const ws = new Website(this.pattern, tc);
 				pc.addWebsite(ws);
 				refreshPC('popup');
 				window.close();
 			},
 			pause() {
 				pc.pause(300);
-			}
-		},
-		computed: {
-			tcEnabled() {
-				return pc.timecodeControl == TimecodeControl.Types.site;
-			}
+			},
 		},
 		mounted() {
-			
-			this.version = chrome.app.getDetails().version; 
+
+			this.version = chrome.app.getDetails().version;
 			this.timecode = getRecentSiteTimecode().timecode;
 
 			chrome.tabs.getSelected(null, (tab) => {
@@ -110,19 +106,20 @@ pc.on(Procrastinator.Events.init, () => {
 					this.pattern = match[1];
 				};
 			});
-		}
+		},
 	});
 	detectRefresh('popup', function(request: any) {
 		// reload enabled state
 		app.enabled = pc.isEnabled();
+		app.tcEnabled = pc.timecodeControl == TimecodeControl.Types.site;
 	});
 });
 
 function getRecentSiteTimecode(): Timecode
 {
-	var websites = pc.websites;
+	const websites = pc.websites;
 	if (websites.length > 0) {
-		var website = websites.pop();
+		const website = websites.pop();
 		return website.timecode;
 	}
 	return new Timecode('');

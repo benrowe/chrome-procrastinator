@@ -1,6 +1,6 @@
 
 enum IconStatus {
-    enabled = 'enabled', 
+    enabled = 'enabled',
     disabled = 'disabled',
 };
 
@@ -12,12 +12,12 @@ interface IconState {
 const STATES: {[index: string]: IconState} = {
     enabled: {
         'icon': 'images/remove_16.png',
-        'title': 'Procrastinator: Enabled'
+        'title': 'Procrastinator: Enabled',
     },
     disabled: {
         'icon': 'images/remove_16_disabled.png',
-        'title': 'Procrastinator: Enabled'
-    }
+        'title': 'Procrastinator: Enabled',
+    },
 }
 
 
@@ -25,7 +25,7 @@ const STATES: {[index: string]: IconState} = {
 /**
  * Handles the icon functionality
  */
-export default class ExtensionIcon 
+export default class ExtensionIcon
 {
     private state: IconStatus;
 
@@ -34,7 +34,7 @@ export default class ExtensionIcon
         this.state = initState;
     }
 
-    enable() 
+    enable()
     {
         this.buttonState(IconStatus.enabled);
     }

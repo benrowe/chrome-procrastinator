@@ -4,7 +4,7 @@ const REFRESH_TYPE = 'refresh';
 
 /**
  * Publish a refresh procrastinator event to all running instances of the extension
- * 
+ *
  * @param {string} publisher the subsystem name that's publishing the event
  */
 export function refreshPC(publisher: string)
@@ -13,15 +13,15 @@ export function refreshPC(publisher: string)
 		chrome.extension.sendRequest({
 			type: REFRESH_TYPE,
 			data: {
-				publisher: publisher
-			}
+				publisher: publisher,
+			},
 		});
 	}, 250);
 }
 
 /**
  * Register a refresh procrastinator event handler
- * 
+ *
  * @param {string} currentPublisher the publisher listening to the event, helps avoid a feedback event loop
  * @param {function} callback the function to call when a event is detected
  */
@@ -73,8 +73,8 @@ function tabExists(url: string): number
 {
 	let exists = 0;
 	chrome.tabs.getAllInWindow(null, function(tabs: any) {
-		var tab;
-		for (var i = 0, len = tabs.length; i < len; i++) {
+		let tab;
+		for (let i = 0, len = tabs.length; i < len; i++) {
 			tab = tabs[i];
 			if (tab.url === url) {
 				// url already exists, switch tab

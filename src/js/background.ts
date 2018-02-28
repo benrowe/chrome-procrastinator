@@ -34,7 +34,7 @@ detectRefresh('bg', function(request) {
 		pauseTimeout = setTimeout(function() {
 			console.info('upausing');
 			procrastinator.removePause();
-			
+
 			pauseTimeout = 0;
 			icon.enable();
 			refreshPC('bg');
@@ -49,12 +49,12 @@ chrome.webRequest.onBeforeRequest.addListener(function(details) {
 		return {};
 	}
 	console.info('checking url: '+details.url);
-	var match = procrastinator.matchWebsite(details.url);
+	const match = procrastinator.matchWebsite(details.url);
 	if (!match || !procrastinator.canRunBlocker(match)) {
 		return {};
 	}
 	// block url
-	var url = chrome.extension.getURL('block.html')
+	let url = chrome.extension.getURL('block.html')
 	if (procrastinator.blockUrl != '') {
 		url = procrastinator.blockUrl;
 	}
