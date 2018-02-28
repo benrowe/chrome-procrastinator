@@ -15,9 +15,10 @@
   "homepage": "https://github.com/benrowe/chrome-procrastinator#readme",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --inline --hot",
-    "test": "echo \"No tests available\" && exit 0",
+    "test": "jest",
     "build": "cross-env NODE_ENV=development webpack --display-error-details --progress --hide-modules",
-    "deploy": "build/deploy.sh"
+    "deploy": "build/deploy.sh",
+    "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'"
   },
   "dependencies": {
     "vue": "^2.5.13",
@@ -39,6 +40,8 @@
     "sass-loader": "^6.0.6",
     "script-loader": "^0.7.2",
     "style-loader": "^0.19.1",
+    "ts-jest": "^22.4.0",
+    "ts-lint": "^4.5.1",
     "ts-loader": "^3.2.0",
     "typescript": "^2.6.2",
     "vue-loader": "^14.1.1",
