@@ -7,15 +7,15 @@
 	<link rel="stylesheet" href="css/options.css">
 </head>
 <body>
-	<div id="container" class="container">
+	<div id="app">
 		<h1>Procrastinator Options</h1>
-		<ul class="action-bar">
-			<li><a href="http://benrowe.info/"><i class="icon-home"></i> website</a></li>
-			<li><a href="https://chrome.google.com/webstore/detail/enagjojfhclogmaemicdkkohjghgpodh"> chrome store</a></li>
-			<li><a href="#helpModal" role="button" data-toggle="modal"><i class="icon-info-sign"></i> help</a></li>
-			<li><a href="#roadmapModal" role="button" data-toggle="modal"><small>roadmap</small></a></li>
-		</ul>
-		<form id="form">
+		<action-bar show-labels>
+			<action href="http://benrowe.info"><icon type="home" /> website</action>
+			<action href="https://chrome.google.com/webstore/detail/enagjojfhclogmaemicdkkohjghgpodh">chrome store</action>
+			<action @click.native="showHelp"><icon type="help" /> help</action>
+			<action @click.native="showRoadmap"> roadmap</action>
+		</action-bar>
+		<form id="form" @submit.prevent="save">
 			<div class="row">
 				<fieldset class="websites span8">
 					<legend>Websites</legend>
@@ -39,9 +39,18 @@
 									</tr>
 								</thead>
 								<tbody>
+									<tr v-for="website in pc.websites" v-if="pc.websites.length > 0">
+										<td><input type="text" value="" v-model="website.pattern" autofocus /></td>
+										<td><input type="text" value="" v-model="website.timecode.timecode" placeholder="0900-1200, 1330-1525" />
+											<i class="icon-trash remove" @click="removeWebsite(website.pattern)"></i>
+										</td>
+									</tr>
+									<tr v-else class="empty-row">
+										<td colspan="2">You have no urls/patterns. Try adding a <a href="#" class="new-row">new one</a></td>
+									</tr>
 									<tr class="new-entry">
-										<td><input type="text" /></td>
-										<td><input type="text" /></td>
+										<td><input type="text" v-model="website" /></td>
+										<td><input type="text" v-model="timecode" /></td>
 									</tr>
 								</tbody>
 
@@ -49,6 +58,7 @@
 						</div>
 						<!--<div class="row-help">Websites patterns are matched using regular expressions, or just specify the extact domain you're looking for.</div>-->
 					</div>
+					<button class="btn btn-block" @click.prevent="addWebsite"><i class="icon-plus"></i>Add New</button>
 				</fieldset>
 				<fieldset class="block-preferences span4">
 					<legend>Preferences</legend>
@@ -57,8 +67,8 @@
 						<div class="control-group enable-app">
 							<label for="" class="control-label">Enable Procrastinator?</label>
 							<div class="controls">
-								<label for="enabled_true" class="radio inline"><input type="radio" name="enabled" id="enabled_true" value="true" checked /> Enabled</label>
-								<label for="enabled_false" class="radio inline"><input type="radio" name="enabled" id="enabled_false" value="false" /> Disabled</label>
+								<label for="enabled_tr	ue" class="radio inline"><input type="radio" name="enabled" id="enabled_true" value="true" v-model="pc.enabled" /> Enabled</label>
+								<label for="enabled_false" class="radio inline"><input type="radio" name="enabled" id="enabled_false" value="false" v-model="pc.enabled" /> Disabled</label>
 							</div>
 						</div>
 					</div>
